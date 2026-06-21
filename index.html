@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python 等级考试刷题 - 在线题库</title>
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<!-- 顶部 -->
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🐍</span>
+    <span class="title">Python 等级考试刷题</span>
+  </div>
+  <div class="stats-bar" id="statsBar">
+    <span class="stat"><strong id="statAnswered">0</strong><em>已答</em></span>
+    <span class="stat"><strong id="statCorrect">0</strong><em>正确</em></span>
+    <span class="stat"><strong id="statRate">--</strong><em>正确率</em></span>
+    <span class="stat"><strong id="statWrong">0</strong><em>错题</em></span>
+  </div>
+  <div class="top-actions">
+    <button class="top-btn" data-action="home">🏠 首页</button>
+    <button class="top-btn" data-action="wrongbook">📖 错题本 (<span id="wrongCount">0</span>)</button>
+    <button class="top-btn" data-action="reset">🔄 重置进度</button>
+  </div>
+</header>
+
+<main class="main" id="main">
+  <!-- 由 JS 动态渲染 -->
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/app.js"></script>
+<!-- jsDelivr CDN 题库加载（fallback，当 window.QUESTIONS 不可用时）-->
+<script src="https://cdn.jsdelivr.net/gh/vinkinyyx/pyquiz@main/data/questions.js"></script>
+</body>
+</html>
