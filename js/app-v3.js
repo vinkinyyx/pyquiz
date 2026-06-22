@@ -369,7 +369,10 @@ function renderQuestion() {
       ${isProgramming ? `
         <div class="code-block" style="display:none;" id="progAnswer">
           <div class="code-header">📋 参考答案</div>
-          <pre class="code-content"><code>${escapeHtml(getAnswer(q) || '（无答案）')}</code></pre>
+          ${getAnswer(q)
+            ? `<pre class="code-content"><code>${escapeHtml(getAnswer(q))}</code></pre>`
+            : `<div class="code-empty">⚠️ 此题暂无参考答案<br><small>请直接看题目要求和评分标准</small></div>`
+          }
         </div>
       ` : ''}
 

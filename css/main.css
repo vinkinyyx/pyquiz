@@ -640,3 +640,15 @@ html, body {
   color: inherit;
   padding: 0;
 }
+.code-empty {
+  background: #1a1530;
+  color: #b898d8;
+  padding: 24px 16px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.code-empty small {
+  color: #888;
+  font-size: 12px;
+}
