@@ -46,17 +46,12 @@ function saveStats() {
 
 // === 题目数据加载 ===
 async function loadQuestions() {
-  // 优先用 window.QUESTIONS（本地题库），fallback 到 window.QUESTIONS_CDN（CDN 加载）
-  let qs = window.QUESTIONS;
-  if (typeof qs === 'undefined' && typeof window.QUESTIONS_CDN !== 'undefined') {
-    qs = window.QUESTIONS_CDN;
-    console.log('🌐 使用 CDN 题库');
-  }
-  if (typeof qs === 'undefined') {
+  // questions.js 暴露 window.QUESTIONS
+  if (typeof window.QUESTIONS === 'undefined') {
     showToast('❌ 题库加载失败');
     return;
   }
-  State.allQuestions = qs;
+  State.allQuestions = window.QUESTIONS;
   console.log(`✅ 加载 ${State.allQuestions.length} 道题`);
 }
 
@@ -113,7 +108,11 @@ function applyFilters() {
     if (f.paperType !== 'all' && q.paper_type !== f.paperType) return false;
     if (f.questionType !== 'all' && q.question_type !== f.questionType) return false;
     if (f.difficulty !== 'all' && q.difficulty !== f.difficulty) return false;
-    if (f.knowledge && !(q.knowledge_points || []).includes(f.knowledge)) return false;
+    if (f.knowledge) {
+      const kp = q.knowledge_points;
+      const kpList = Array.isArray(kp) ? kp : (typeof kp === 'string' ? [kp] : []);
+      if (!kpList.includes(f.knowledge)) return false;
+    }
     return true;
   });
 }
@@ -202,10 +201,12 @@ function renderFilters(mode) {
   State.mode = mode;
   const main = document.getElementById('main');
 
-  // 收集所有知识点
+  // 收集所有知识点（兼容字符串/数组两种格式）
   const allKP = new Set();
   State.allQuestions.forEach(q => {
-    (q.knowledge_points || []).forEach(kp => allKP.add(kp));
+    const kp = q.knowledge_points;
+    if (Array.isArray(kp)) kp.forEach(k => allKP.add(k));
+    else if (typeof kp === 'string' && kp.trim()) allKP.add(kp.trim());
   });
   const kpList = Array.from(allKP).sort();
 

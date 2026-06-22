@@ -33,8 +33,15 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="js/app.js"></script>
-<!-- jsDelivr CDN 题库加载（fallback，当 window.QUESTIONS 不可用时）-->
-<script src="https://cdn.jsdelivr.net/gh/vinkinyyx/pyquiz@main/data/questions.js"></script>
+<!-- 题库数据（1MB），注入 window.QUESTIONS_CDN -->
+<script src="data/questions.js?v=20260622"></script>
+<!-- 题库别名（CDN 数据是 QUESTIONS_CDN，app-v3.js 期望 QUESTIONS） -->
+<script>
+  if (typeof window.QUESTIONS_CDN !== 'undefined' && typeof window.QUESTIONS === 'undefined') {
+    window.QUESTIONS = window.QUESTIONS_CDN;
+  }
+</script>
+<!-- 主应用（含图片选项支持） -->
+<script src="js/app-v3.js?v=20260622"></script>
 </body>
 </html>
