@@ -66,7 +66,17 @@ function escapeHtml(s) {
 // 字段适配：导出题库用 question_text/answer/explanation，前端原用 stem/answer
 // 编程题的"参考答案"在 explanation 字段，answer 字段可能为空
 function getStem(q) { return q.question_text || q.stem || ''; }
-function getAnswer(q) { return q.answer || q.explanation || ''; }
+function getAnswer(q) {
+  // 优先 answer，其次 explanation
+  let ans = q.answer || q.explanation || '';
+  // 编程题 answer/explanation 都为空时，从题干末尾提取"参考程序"和"评分标准"
+  if (!ans && q.question_type === '编程题' && q.question_text) {
+    const text = q.question_text;
+    const refMatch = text.match(/(参考程序[：:][\s\S]*)/);
+    if (refMatch) ans = refMatch[1];
+  }
+  return ans;
+}
 function getOptions(q) {
   const opts = q.options || {};
   return opts;
@@ -384,8 +394,9 @@ function renderQuestion() {
     });
   }
 
-  // 提交
-  document.getElementById('btnSubmit').addEventListener('click', () => submitAnswer(q));
+  // 提交（非编程题才有 btnSubmit）
+  const btnSubmit = document.getElementById('btnSubmit');
+  if (btnSubmit) btnSubmit.addEventListener('click', () => submitAnswer(q));
   document.getElementById('btnSkip').addEventListener('click', () => {
     if (State.mode === 'exam') State.examAnswers[q.id] = null;
     nextQuestion();
@@ -396,8 +407,9 @@ function renderQuestion() {
       const el = document.getElementById('progAnswer');
       el.style.display = el.style.display === 'none' ? 'block' : 'none';
     });
-    // 编程题不需要"提交"
-    document.getElementById('btnSubmit').style.display = 'none';
+    // 编程题不需要"提交"（btnSubmit 不存在）
+    const progBtnSubmit = document.getElementById('btnSubmit');
+    if (progBtnSubmit) progBtnSubmit.style.display = 'none';
   }
 
   // 图片点击放大
