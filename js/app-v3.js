@@ -63,6 +63,15 @@ function escapeHtml(s) {
   }[ch]));
 }
 
+// 字段适配：导出题库用 question_text/answer/explanation，前端原用 stem/answer
+// 编程题的"参考答案"在 explanation 字段，answer 字段可能为空
+function getStem(q) { return q.question_text || q.stem || ''; }
+function getAnswer(q) { return q.answer || q.explanation || ''; }
+function getOptions(q) {
+  const opts = q.options || {};
+  return opts;
+}
+
 function showToast(msg, duration = 2000) {
   const toast = document.getElementById('toast');
   toast.textContent = msg;
@@ -336,7 +345,10 @@ function renderQuestion() {
         ${q.difficulty ? `<span class="q-tag">${escapeHtml(q.difficulty)}</span>` : ''}
       </div>
 
-      <div class="q-text" style="margin-top:16px;">${escapeHtml(q.stem)}</div>
+      ${isProgramming
+        ? `<div class="q-stem-code"><pre class="stem-code">${escapeHtml(getStem(q))}</pre></div>`
+        : `<div class="q-text" style="margin-top:16px;">${escapeHtml(getStem(q))}</div>`
+      }
 
       <div class="options" id="optionsContainer">
         ${optionsHtml}
@@ -347,7 +359,7 @@ function renderQuestion() {
       ${isProgramming ? `
         <div class="code-block" style="display:none;" id="progAnswer">
           <div class="code-header">📋 参考答案</div>
-          <pre class="code-content"><code>${escapeHtml(q.answer || '（无答案）')}</code></pre>
+          <pre class="code-content"><code>${escapeHtml(getAnswer(q) || '（无答案）')}</code></pre>
         </div>
       ` : ''}
 
@@ -427,7 +439,7 @@ function submitAnswer(q) {
   if (State.mode === 'exam') State.examAnswers[q.id] = State.selectedOption;
 
   State.answered = true;
-  const correctAnswer = q.answer;
+  const correctAnswer = getAnswer(q);
   const isCorrect = State.selectedOption === correctAnswer;
 
   State.stats.answered++;
@@ -494,7 +506,7 @@ function renderDone() {
       const userAns = State.examAnswers[q.id];
       if (userAns) {
         answered++;
-        if (userAns === q.answer) correct++;
+        if (userAns === getAnswer(q)) correct++;
       }
     });
   }
@@ -529,7 +541,7 @@ function renderDone() {
       // 复习本次错题
       State.filteredQuestions = State.filteredQuestions.filter(q => {
         const ua = State.examAnswers[q.id];
-        return ua && ua !== q.answer;
+        return ua && ua !== getAnswer(q);
       });
       if (State.filteredQuestions.length > 0) {
         State.currentIndex = 0;
@@ -576,7 +588,7 @@ function renderWrongbook() {
           <div class="wb-meta">
             <span>📅 ${q.level} ${q.year}.${String(q.month).padStart(2,'0')}</span>
             <span>📝 ${q.question_type}</span>
-            <span>✅ 正确答案: ${q.answer || '?'}</span>
+            <span>✅ 正确答案: ${getAnswer(q) || '?'}</span>
           </div>
         </div>
       `).join('')}

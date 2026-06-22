@@ -270,6 +270,33 @@ html, body {
   color: var(--accent-bright);
 }
 
+/* 编程题题干（含代码）：紫色主题 */
+.q-stem-code {
+  background: linear-gradient(135deg, #2a1f3d 0%, #1a1530 100%);
+  border: 1px solid #6b4d8a;
+  border-left: 4px solid #9d6cd9;
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px rgba(157, 108, 217, 0.15);
+}
+.stem-code {
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+  font-family: 'SF Mono', 'JetBrains Mono', 'Menlo', 'Monaco', 'Consolas', 'Courier New', monospace !important;
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: #f0e6ff;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-weight: 400;
+}
+.stem-code::first-line {
+  font-weight: 600;
+  color: #c9a6ff;
+}
+
 .options {
   display: flex;
   flex-direction: column;
