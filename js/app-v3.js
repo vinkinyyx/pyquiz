@@ -339,14 +339,16 @@ function renderQuestion() {
       <div class="feedback" id="feedback"></div>
 
       ${isProgramming ? `
-        <div class="code-block" style="display:none;" id="progAnswer">${escapeHtml(q.answer || '（无答案）')}</div>
+        <div class="code-block" style="display:none;" id="progAnswer">
+          <div class="code-header">📋 参考答案</div>
+          <pre class="code-content"><code>${escapeHtml(q.answer || '（无答案）')}</code></pre>
+        </div>
       ` : ''}
 
       <div class="q-actions">
         <button class="btn btn-secondary" id="btnSkip">⏭️ 跳过</button>
-        <button class="btn btn-primary" id="btnSubmit" disabled>提交答案</button>
+        ${isProgramming ? `<button class="btn btn-primary" id="btnShowCode">查看参考答案</button>` : '<button class="btn btn-primary" id="btnSubmit" disabled>提交答案</button>'}
         <button class="btn btn-primary" id="btnNext" style="display:none;">${isLast ? '查看结果' : '下一题 →'}</button>
-        ${isProgramming ? `<button class="btn btn-secondary" id="btnShowCode">查看答案</button>` : ''}
       </div>
     </div>
   `;

@@ -582,3 +582,34 @@ html, body {
   .main { padding: 20px 16px; }
   .question-card { padding: 20px; }
 }
+/* === 编程题代码块 === */
+.code-block {
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border, #444);
+}
+.code-header {
+  background: linear-gradient(135deg, #2a1f3d, #1a1530);
+  color: #c8a8ff;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 14px;
+  border-bottom: 1px solid #3a2a5a;
+}
+.code-content {
+  background: #0d0a1a;
+  color: #e0d0ff;
+  padding: 16px;
+  margin: 0;
+  font-family: 'SF Mono', 'Consolas', 'Monaco', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-x: auto;
+  white-space: pre;
+}
+.code-content code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
