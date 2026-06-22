@@ -12,7 +12,7 @@ const State = {
   examStartTime: null,
   filters: {
     level: 'all',           // 'all' | '一级' | '二级' | '三级'
-    paperType: '客观题',
+    paperType: 'all',       // 'all' | '客观题' | '编程题'
     questionType: 'all',    // 'all' | '单选题' | '判断题' | '编程题'
     knowledge: null,        // 知识点字符串
     difficulty: 'all',
@@ -220,6 +220,12 @@ function renderFilters(mode) {
         <button class="filter-btn ${State.filters.level==='一级'?'active':''}" data-f="level" data-v="一级">一级</button>
         <button class="filter-btn ${State.filters.level==='二级'?'active':''}" data-f="level" data-v="二级">二级</button>
         <button class="filter-btn ${State.filters.level==='三级'?'active':''}" data-f="level" data-v="三级">三级</button>
+      </div>
+      <div class="filters-row">
+        <label>试卷类型：</label>
+        <button class="filter-btn ${State.filters.paperType==='all'?'active':''}" data-f="paperType" data-v="all">全部</button>
+        <button class="filter-btn ${State.filters.paperType==='客观题'?'active':''}" data-f="paperType" data-v="客观题">客观题</button>
+        <button class="filter-btn ${State.filters.paperType==='编程题'?'active':''}" data-f="paperType" data-v="编程题">编程题</button>
       </div>
       <div class="filters-row">
         <label>题型：</label>
