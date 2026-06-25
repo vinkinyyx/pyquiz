@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python 之塔 - Code Defenders</title>
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+
+<!-- 顶部 -->
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🏰</span>
+    <span class="title">Python 之塔 · Code Defenders</span>
+  </div>
+  <div class="stats-bar" id="statsBar">
+    <span class="stat"><strong id="hpDisplay">❤️ 10</strong><em>生命</em></span>
+    <span class="stat"><strong id="goldDisplay">💰 0</strong><em>金币</em></span>
+    <span class="stat"><strong id="waveDisplay">🌊 1/5</strong><em>波次</em></span>
+    <span class="stat"><strong id="levelDisplay">⚔️ 1</strong><em>等级</em></span>
+  </div>
+  <div class="top-actions">
+    <button class="top-btn" id="btnHome">🏠 返回首页</button>
+    <button class="top-btn" id="btnRestart">🔄 重新开始</button>
+  </div>
+</header>
+
+<!-- 地图 / 关卡选择 -->
+<main class="main" id="mapScreen">
+  <h1 style="text-align:center;color:#c8a8ff;margin:30px 0;">🗺️ 选择关卡</h1>
+  <div id="levelMap" class="level-map">
+    <!-- JS 动态生成 5 个关卡 -->
+  </div>
+</main>
+
+<!-- 战斗界面 -->
+<main class="main" id="battleScreen" style="display:none;">
+  <div class="battle-header">
+    <h2 id="battleTitle">第 1 关 · 变量森林</h2>
+    <div id="monsterStatus">🌊 第 1 波 · 4 只小怪来袭</div>
+  </div>
+
+  <!-- Canvas 战场 -->
+  <canvas id="battleCanvas" width="900" height="400"></canvas>
+
+  <!-- 答题面板 -->
+  <div id="quizPanel" class="quiz-panel" style="display:none;">
+    <div class="quiz-header">
+      <span id="quizTower">🏹 箭塔需要你的指令！</span>
+      <span id="quizTimer">⏱️ 30</span>
+    </div>
+    <div class="quiz-stem" id="quizStem"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-feedback" id="quizFeedback"></div>
+  </div>
+
+  <!-- 下一波按钮（波次间显示） -->
+  <div id="waveBtn" class="wave-btn" style="display:none;">
+    <button class="btn btn-primary" id="btnNextWave">▶️ 下一波来袭</button>
+  </div>
+</main>
+
+<!-- 通关 / 失败界面 -->
+<main class="main" id="resultScreen" style="display:none;">
+  <div class="result-content">
+    <h1 id="resultTitle"></h1>
+    <div id="resultStats"></div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="btnRetry">🔄 再战一次</button>
+      <button class="btn btn-secondary" id="btnBackMap">🗺️ 返回地图</button>
+    </div>
+  </div>
+</main>
+
+<!-- 题库加载（复用 pyquiz 1.0 的 1561 题） -->
+<script src="../data/questions.js?v=20260623e"></script>
+<script>
+  if (typeof window.QUESTIONS_CDN !== 'undefined' && typeof window.QUESTIONS === 'undefined') {
+    window.QUESTIONS = window.QUESTIONS_CDN;
+  }
+</script>
+<!-- 关卡配置 -->
+<script src="data/levels.js?v=20260623e"></script>
+<!-- 游戏引擎 -->
+<script src="js/engine.js?v=20260623e"></script>
+<script src="js/tower.js?v=20260623e"></script>
+<script src="js/monster.js?v=20260623e"></script>
+<script src="js/battle.js?v=20260623e"></script>
+</body>
+</html>

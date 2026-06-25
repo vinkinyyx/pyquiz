@@ -652,3 +652,40 @@ html, body {
   color: #888;
   font-size: 12px;
 }
+
+/* 首页浮动游戏入口按钮 */
+.game-entry {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #fb923c 0%, #f87171 100%);
+  color: #fff;
+  text-decoration: none;
+  padding: 14px 22px;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(248, 113, 113, 0.4), 0 0 0 4px rgba(251, 146, 60, 0.2);
+  z-index: 100;
+  transition: all 0.2s;
+  animation: gamePulse 2s ease-in-out infinite;
+}
+.game-entry:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 12px 32px rgba(248, 113, 113, 0.6), 0 0 0 6px rgba(251, 146, 60, 0.3);
+}
+.game-entry .game-icon {
+  font-size: 24px;
+  animation: gameBounce 1.2s ease-in-out infinite;
+}
+@keyframes gamePulse {
+  0%, 100% { box-shadow: 0 8px 24px rgba(248, 113, 113, 0.4), 0 0 0 4px rgba(251, 146, 60, 0.2); }
+  50% { box-shadow: 0 8px 24px rgba(248, 113, 113, 0.5), 0 0 0 12px rgba(251, 146, 60, 0.1); }
+}
+@keyframes gameBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
